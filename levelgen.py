@@ -1,6 +1,5 @@
 import numpy
 from numpy.random import random_integers as rand
-import matplotlib.pyplot as pyplot
 
 def maze(width=30, height=30, complexity=.01, density=.25):
     shape = ((height // 2) * 2 + 1, (width // 2) * 2 + 1)
