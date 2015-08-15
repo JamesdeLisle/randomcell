@@ -44,8 +44,8 @@ def placeFood(lattice,foodList):
     locy = 0
     diffprev = 1000.0
     diffcurr = 1000.0
-    
-    for tik1 in range(30):
+
+    for tik1 in range(lattice.height):
         diffcurr = lattice.points[tik1][0].location[1] - mouse_position[1]
         if abs(diffcurr) < abs(diffprev):
             locx = tik1
@@ -53,7 +53,7 @@ def placeFood(lattice,foodList):
     diffprev = 1000.0
     diffcurr = 1000.0
 
-    for tik1 in range(30):
+    for tik1 in range(lattice.width):
         diffcurr = lattice.points[5][tik1].location[0] - mouse_position[0]
         
         if abs(diffcurr) < abs(diffprev):
