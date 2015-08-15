@@ -15,6 +15,9 @@ class allCells:
         map(lambda cell: cell.printCell(screen,lattice), self.celist)
         map(lambda cell: cell.updateCell(lattice,foodList,cellList), self.celist)
 
+    def numberOfCells(self):
+        return len(self.celist)
+
 class allFood:
 
     def __init__(self):

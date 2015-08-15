@@ -47,8 +47,10 @@ def main():
             zombieList.updateZombies(window.display, lat, cellList)
             cellList.updateCells(window.display, lat, foodList, cellList)
             foodList.updateFoods(window.display, lat)
-
             lat.colorWallMap(window.display)
+
+            if cellList.numberOfCells() == 0:
+                running = 0
         elif event.type == pygame.MOUSEBUTTONUP:
             placeFood(lat,foodList)
         
