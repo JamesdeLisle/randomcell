@@ -11,18 +11,11 @@ class latAttribute:
 def createWallMap(width,height):
 
     wallMap = [ [ False for x in range(width)] for y in range(height)]
-<<<<<<< HEAD
-
-    level = 0
-    if level == 0:
-        wallMap = maze(width, height)
-=======
    
     level = 0
     
     if level == 0:
         wallMap = generate_maze(width,height)
->>>>>>> newfeatures
     elif level == 1:
         for tik1 in range(height):
             for tik2 in range(width):
@@ -31,33 +24,17 @@ def createWallMap(width,height):
     elif level == 2:
         for tik1 in range(height):
             for tik2 in range(width):
-<<<<<<< HEAD
-                if 10 <= tik1 <= 20 and 10 <= tik2 <= 20:
-=======
                 if 10 <= tik1 <= 20  and 10 <= tik2 <= 20:
->>>>>>> newfeatures
                     wallMap[tik1][tik2] = True
     elif level == 3:
         for tik1 in range(height):
             for tik2 in range(width):
-<<<<<<< HEAD
-                if 0 < tik1 < 15 and tik2 == 10:
-=======
                 if 0 < tik1 < 15  and tik2 == 10:
->>>>>>> newfeatures
                     wallMap[tik1][tik2] = True
 
     return wallMap
 
 class lattice:
-<<<<<<< HEAD
-#TODO move each individual grid to its own class
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.points = [ [ latAttribute(x,y) for x in range(self.width)] for y in range(self.height)]
-        self.wallMap = createWallMap(self.width,self.height)
-=======
 
     def __init__(self,width,height):
 
@@ -65,31 +42,15 @@ class lattice:
         self.height = height
         self.points = [ [ latAttribute(x,y) for x in range(self.width)] for y in range(self.height)]
         self.wallMap = createWallMap(width,height)
->>>>>>> newfeatures
         self.heatMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         self.cellMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.foodMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.smellMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         self.zombieCellMap = [ [ False for x in range(self.width)] for y in range(self.height)]
-<<<<<<< HEAD
-
-    def colorWallMap(self,screen):
-
-        for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                xpos = self.points[tik1][tik2].location[0]-9
-                ypos = self.points[tik1][tik2].location[1]-9
-                squarewidth = 18
-                squareheight = 18
-                if self.wallMap[tik1][tik2]:
-                    # TODO stop the lattice drawing directly on the screen
-                    pygame.draw.rect(screen,(0,0,0),(xpos,ypos,squarewidth,squareheight))
-=======
         self.motherMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.motherPherMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         self.emptyMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         
->>>>>>> newfeatures
 
     def updateHeatMap(self,cellList):
 
@@ -101,12 +62,8 @@ class lattice:
                     for tik5 in range(len(cellList.celist)):
                         if cellList.celist[tik5].x == tik1 and cellList.celist[tik5].y == tik2:
                             self.heatMap[tik1][tik2] = (1 - cellList.celist[tik5].hunger) * 2.0
-<<<<<<< HEAD
-
-=======
                 minL = 0
                 maxL = 29
->>>>>>> newfeatures
                 adjCells = getAdjacent(self.wallMap,tik1,tik2)
 
                 if len(adjCells) == 0:
@@ -133,14 +90,10 @@ class lattice:
                     tempMap[tik1][tik2] = 1.0
                 tempMap[tik1][tik2] = tempMap[tik1][tik2] * 0.8 
 
-<<<<<<< HEAD
-                adjCells = getAdjacent(self.wallMap, tik1, tik2)
-=======
                 minL = 0
                 maxL = 29
                 
                 adjCells = getAdjacent(self.wallMap,tik1,tik2)
->>>>>>> newfeatures
                 if len(adjCells) == 0:
                     pass
                 else:
@@ -152,9 +105,6 @@ class lattice:
                         tempMap[xpos][ypos] = tempMap[xpos][ypos] + self.smellMap[tik1][tik2] * scale 
                         
         self.smellMap = tempMap
-<<<<<<< HEAD
-
-=======
    
     def updateMotherPherMap(self,motherList):
 
@@ -196,34 +146,19 @@ class lattice:
                 if self.wallMap[tik1][tik2]:
                     pygame.draw.rect(screen,(0,0,0),(xpos,ypos,width,height))
     
->>>>>>> newfeatures
     def colorSmellMap(self,screen):
         
         for tik1 in range(self.height):
             for tik2 in range(self.width):
-<<<<<<< HEAD
-                
-                cValue = round((1-self.smellMap[tik1][tik2])*255/1.5)
-                
-                if cValue > 255:
-                    cValue = 255
-                elif cValue < 0:
-                    cValue = 0
-=======
                 len(self.heatMap[0]) 
                 
                 cValue = round((1-self.smellMap[tik1][tik2])*255/1.5)
 
                 cValue = keepInBoundaries(0,cValue,255)
->>>>>>> newfeatures
                  
                 xpos = self.points[tik1][tik2].location[0]
                 ypos = self.points[tik1][tik2].location[1]
                 if self.smellMap[tik1][tik2] > 1e-2 and cValue < 250:
-<<<<<<< HEAD
-                    # TODO stop the lattice drawing directly on the screen
-=======
->>>>>>> newfeatures
                     pygame.draw.circle(screen,(cValue,255,cValue),(xpos,ypos),4)
                 
      
@@ -231,20 +166,6 @@ class lattice:
         
         for tik1 in range(self.height):
             for tik2 in range(self.width):
-<<<<<<< HEAD
-                cValue = round((1-self.heatMap[tik1][tik2])*255)
-                if cValue > 255:
-                    cValue = 255
-                elif cValue < 0:
-                    cValue = 0
-                xpos = self.points[tik1][tik2].location[0]-9
-                ypos = self.points[tik1][tik2].location[1]-9
-                squarewidth = 18
-                squareheight = 18
-                if self.heatMap[tik1][tik2] != 0:
-                    # TODO stop the lattice drawing directly on the screen
-                    pygame.draw.rect(screen,(255,cValue,cValue),(xpos,ypos,squarewidth,squareheight))
-=======
                 len(self.heatMap[0]) 
                 cValue = round((1-self.heatMap[tik1][tik2])*255)
                 cValue = keepInBoundaries(0,cValue,255) 
@@ -254,6 +175,5 @@ class lattice:
                 height = 18
                 if self.heatMap[tik1][tik2] != 0:
                     pygame.draw.rect(screen,(255,cValue,cValue),(xpos,ypos,width,height))
->>>>>>> newfeatures
                 
 

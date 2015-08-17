@@ -1,15 +1,8 @@
 import numpy
 from numpy.random import random_integers as rand
-<<<<<<< HEAD
-
-def maze(width, height, complexity=.01, density=.25):
-    # TODO work with odd input width and height
-    # TODO ensure all sides are walled
-=======
 import matplotlib.pyplot as pyplot
 
 def generate_maze(width, height, complexity=.01, density=.25):
->>>>>>> newfeatures
     shape = ((height // 2) * 2 + 1, (width // 2) * 2 + 1)
     complexity = int(complexity * (5 * (shape[0] + shape[1])))
     density    = int(density * (shape[0] // 2 * shape[1] // 2))

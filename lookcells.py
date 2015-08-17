@@ -8,16 +8,6 @@ def discreteDraw(values,probabilities):
     out = values[np.digitize(random_sample(1),bins)]
     return round(out[0])
 
-<<<<<<< HEAD
-def getAdjacent(wallMap,x,y):
-
-    adjCells = []
-    minX = 0
-    maxX = len(wallMap) - 1
-    minY = 0
-    maxY = len(wallMap[0]) - 1
-
-=======
 def wrapBoundaries(min_, val, max_):
     return min_ if val > max_ else max_ if val < min_ else val
 
@@ -31,25 +21,10 @@ def getAdjacent(wallMap,x,y):
     minLy = 0
     maxLx = len(wallMap[:])-1
     minLx = 0
->>>>>>> newfeatures
     for x_shift in range(-1,2):
         for y_shift in range(-1,2):
             adjx = x + x_shift
             adjy = y + y_shift
-<<<<<<< HEAD
-            if (
-                not (x_shift == 0 and y_shift == 0) and
-                not adjx > maxX and
-                not adjx < minX and
-                not adjy > maxY and
-                not adjy < minY and
-                not wallMap[adjx][adjy]
-            ):
-                adjCells.append([adjx, adjy, x_shift, y_shift])
-
-
-    return adjCells
-=======
             if not (x_shift == 0 and y_shift == 0):
                 if adjx > maxLx:
                     if adjy > maxLy:
@@ -137,7 +112,6 @@ def giveCoord(x,y):
 
     return outcoord
 
->>>>>>> newfeatures
 
 
 
