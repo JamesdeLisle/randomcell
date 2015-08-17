@@ -7,21 +7,15 @@ from food import *
 from numpy import abs
 from players import *
 from cell_zombie import *
-
-screen = pygame.display.set_mode((800,800))
-
-def drawGrid():
-    for tik in range(0,31):
-        pygame.draw.line(screen,(0,0,255),(100+(tik*20),100),(100+(tik*20),700))
-        pygame.draw.line(screen,(0,0,255),(100,100+(tik*20)),(700,100+(tik*20)))
-
-def drawBackground():
-    screen.fill((255,255,255))
-    drawGrid()
+from grid_window import *
     
 def main():
-
-    lat = lattice()
+    width = 30
+    height = 30
+    # TODO only even numbers will work with levelgen
+    window = grid_window(width, height)
+    #window.create_window()
+    lat = lattice(width, height)
     MOVEEVENT = pygame.USEREVENT+1
     DOUBLEMOVEEVENT = pygame.USEREVENT+1
     pygame.time.set_timer(DOUBLEMOVEEVENT,125)
@@ -34,7 +28,7 @@ def main():
     cellList.addCell(lat,25,6)
     foodList = allFood()
     #foodList.addFood(lat,10,9)
-    drawBackground()
+    window.draw_background()
     running = 1
 
     while running:
@@ -43,21 +37,25 @@ def main():
         if event.type == pygame.QUIT:
             running = 0
         elif event.type == MOVEEVENT:
-            drawBackground()
-            killDying(lat,cellList)
-            createChildren(lat,cellList) 
+            window.draw_background()
+            killDying(lat, cellList)
+            createChildren(lat, cellList)
             lat.updateHeatMap(cellList)
-            lat.colorHeatMap(screen)
+            lat.colorHeatMap(window.display)
             lat.updateSmellMap()
-            lat.colorSmellMap(screen)
-            zombieList.updateZombies(screen,lat,cellList)
-            cellList.updateCells(screen,lat,foodList,cellList)
-            foodList.updateFoods(screen,lat)
+            lat.colorSmellMap(window.display)
+            zombieList.updateZombies(window.display, lat, cellList)
+            cellList.updateCells(window.display, lat, foodList, cellList)
+            foodList.updateFoods(window.display, lat)
+            lat.colorWallMap(window.display)
 
-            lat.colorWallMap(screen)
+            if cellList.numberOfCells() == 0:
+                running = 0
         elif event.type == pygame.MOUSEBUTTONUP:
             placeFood(lat,foodList)
         
         pygame.display.update()
+
+    pygame.quit()
 
 main()

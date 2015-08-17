@@ -94,32 +94,7 @@ class cell:
             self.y = maxL
     
     def updateCellMap(self,lattice):
-        
-        minL = 0
-        maxL = 29
-        
-        if self.x > maxL:
-            if self.y > maxL:
-                lattice.cellMap[minL][minL] = True
-            elif self.y < minL:
-                lattice.cellMap[minL][maxL] = True
-        elif self.x < minL:
-            if self.y > maxL:
-                lattice.cellMap[maxL][minL] = True
-            elif self.y < minL:
-                lattice.cellMap[maxL][maxL] = True
-        elif self.y > maxL:
-            if self.x > maxL:
-                lattice.cellMap[minL][minL] = True
-            elif self.x < minL:
-                lattice.cellMap[maxL][minL] = True
-        elif self.y < minL:
-            if self.x > maxL:
-                lattice.cellMap[minL][maxL] = True
-            elif self.x < minL:
-                lattice.cellMap[maxL][maxL] = True
-        else: 
-            lattice.cellMap[self.x][self.y] = True
+        lattice.cellMap[self.x][self.y] = True
             
     def updateCell(self,lattice,foodList,cellList):
        
