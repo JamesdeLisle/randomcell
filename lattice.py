@@ -49,6 +49,8 @@ class lattice:
         self.zombieCellMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.motherMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.motherPherMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
+        self.zombiePherMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
+
         self.emptyMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         
 
@@ -89,11 +91,9 @@ class lattice:
                 if self.foodMap[tik1][tik2]:
                     tempMap[tik1][tik2] = 1.0
                 tempMap[tik1][tik2] = tempMap[tik1][tik2] * 0.8 
-
-                minL = 0
-                maxL = 29
                 
                 adjCells = getAdjacent(self.wallMap,tik1,tik2)
+
                 if len(adjCells) == 0:
                     pass
                 else:
@@ -116,8 +116,7 @@ class lattice:
                     for tik5 in range(len(motherList.motherList)):
                         if motherList.motherList[tik5].x == tik1 and motherList.motherList[tik5].y == tik2:
                             self.motherPherMap[tik1][tik2] = 2.0
-                minL = 0
-                maxL = 29
+
                 adjCells = getAdjacent(self.wallMap,tik1,tik2)
 
                 if len(adjCells) == 0:
@@ -134,6 +133,35 @@ class lattice:
                 if tempMap[tik1][tik2] < 1e-2:
                     tempMap[tik1][tik2] = 0
         self.motherPherMap = tempMap
+
+    def updateZombiePherMap(self,zombieList):
+
+        tempMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
+        for tik1 in range(self.height):
+            for tik2 in range(self.width):
+                self.zombiePherMap[tik1][tik2] = self.zombiePherMap[tik1][tik2] * 0.95 
+                if self.zombieMap[tik1][tik2]:
+                    for tik5 in range(len(zombieList.zombieList)):
+                        if zombieList.zombieList[tik5].x == tik1 and zombieList.zombieList[tik5].y == tik2:
+                            self.zombiePherMap[tik1][tik2] = 2.0
+
+                adjCells = getAdjacent(self.wallMap,tik1,tik2)
+
+                if len(adjCells) == 0:
+                    pass
+                else:
+                    scale = 1.0/len(adjCells[:])
+                    for tik3 in range(len(adjCells[:])):
+                        xpos = adjCells[tik3][0]
+                        ypos = adjCells[tik3][1]
+                        tempMap[xpos][ypos] = tempMap[xpos][ypos] + self.zombiePherMap[tik1][tik2] * scale
+                        
+        for tik1 in range(self.height):
+            for tik2 in range(self.width):
+                if tempMap[tik1][tik2] < 1e-1:
+                    tempMap[tik1][tik2] = 0
+        self.zombiePherMap = tempMap
+
 
     def colorWallMap(self,screen):
 
