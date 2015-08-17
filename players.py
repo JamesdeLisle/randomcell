@@ -1,7 +1,15 @@
 import pygame
+<<<<<<< HEAD
 from cell import *
 from food import *
 from cell_zombie import *
+=======
+from drone import *
+from food import *
+from zombie import *
+from cell import *
+from mother import *
+>>>>>>> newfeatures
 
 class allCells:
 
@@ -9,7 +17,11 @@ class allCells:
         self.celist = []
 
     def addCell(self,lattice,x,y):
+<<<<<<< HEAD
         self.celist.append(cell(lattice,x,y))
+=======
+        self.celist.append(drone(lattice,x,y))
+>>>>>>> newfeatures
 
     def updateCells(self,screen,lattice,foodList,cellList):
         map(lambda cell: cell.printCell(screen,lattice), self.celist)
@@ -34,11 +46,36 @@ class allZombies:
         self.zombieList = []
 
     def addZombie(self,lattice,x,y):
+<<<<<<< HEAD
         self.zombieList.append(zombieCell(lattice,x,y))
 
     def updateZombies(self,screen,lattice,cellList):
         map(lambda zombieCell: zombieCell.printCell(screen,lattice), self.zombieList)
         map(lambda zombieCell: zombieCell.updateCell(lattice,cellList), self.zombieList)
+=======
+        self.zombieList.append(zombie(lattice,x,y))
+
+    def updateZombies(self,screen,lattice,cellList):
+        map(lambda zombie: zombie.printCell(screen,lattice), self.zombieList)
+        map(lambda zombie: zombie.updateCell(lattice,cellList), self.zombieList)
+
+    def numberOfCells(self):
+        return len(self.zombieList)
+
+class allMothers:
+    def __init__(self):
+        self.motherList = []
+
+    def addMother(self,lattice,x,y):
+        self.motherList.append(mother(lattice,x,y))
+
+    def updateMothers(self,screen,lattice,foodList):
+        map(lambda mother: mother.printCell(screen,lattice), self.motherList)
+        map(lambda mother: mother.updateCell(lattice,foodList), self.motherList)
+
+    def numberOfCells(self):
+        return len(self.motherList)
+>>>>>>> newfeatures
 
 def placeFood(lattice,foodList):
     
@@ -47,7 +84,11 @@ def placeFood(lattice,foodList):
     locy = 0
     diffprev = 1000.0
     diffcurr = 1000.0
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> newfeatures
     for tik1 in range(lattice.height):
         diffcurr = lattice.points[tik1][0].location[1] - mouse_position[1]
         if abs(diffcurr) < abs(diffprev):
