@@ -23,7 +23,7 @@ class cell(object):
             ypos = adjCells[tik][1]
         
             if self.species == 'drone':
-                thisDanger = lattice.emptyMap[xpos][ypos]
+                thisDanger = lattice.zombiePherMap[xpos][ypos]
                 thisDesire = lattice.smellMap[xpos][ypos]
             elif self.species == 'zombie':
                 thisDanger = lattice.motherPherMap[xpos][ypos]
@@ -53,12 +53,12 @@ class cell(object):
         
         if self.species == 'drone':
             moveToDesire = 8.0
-            moveAwayDanger = 1.0
+            moveAwayDanger = 100.0
             moveToOther = 1.0
             moveNowhere = 5.0
         elif self.species == 'zombie':
             moveToDesire = 10.0
-            moveAwayDanger = 25.0
+            moveAwayDanger = 10.0
             moveToOther = 1.0
             moveNowhere = 5.0
         elif self.species == 'mother':

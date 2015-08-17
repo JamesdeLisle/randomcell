@@ -64,8 +64,7 @@ class lattice:
                     for tik5 in range(len(cellList.celist)):
                         if cellList.celist[tik5].x == tik1 and cellList.celist[tik5].y == tik2:
                             self.heatMap[tik1][tik2] = (1 - cellList.celist[tik5].hunger) * 2.0
-                minL = 0
-                maxL = 29
+                
                 adjCells = getAdjacent(self.wallMap,tik1,tik2)
 
                 if len(adjCells) == 0:
@@ -140,7 +139,7 @@ class lattice:
         for tik1 in range(self.height):
             for tik2 in range(self.width):
                 self.zombiePherMap[tik1][tik2] = self.zombiePherMap[tik1][tik2] * 0.95 
-                if self.zombieMap[tik1][tik2]:
+                if self.zombieCellMap[tik1][tik2]:
                     for tik5 in range(len(zombieList.zombieList)):
                         if zombieList.zombieList[tik5].x == tik1 and zombieList.zombieList[tik5].y == tik2:
                             self.zombiePherMap[tik1][tik2] = 2.0
@@ -160,6 +159,7 @@ class lattice:
             for tik2 in range(self.width):
                 if tempMap[tik1][tik2] < 1e-1:
                     tempMap[tik1][tik2] = 0
+        
         self.zombiePherMap = tempMap
 
 
