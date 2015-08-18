@@ -18,13 +18,14 @@ def main():
     
     width = 70
     height = 30
-    stepDuration = 250
+    stepDuration = 500
     window = grid_window(width,height)
     lat = lattice(width,height)
     MOVEEVENT = pygame.USEREVENT+1
-    DOUBLEMOVEEVENT = pygame.USEREVENT+1
-    pygame.time.set_timer(DOUBLEMOVEEVENT,125)
+    PRINTEVENT = pygame.USEREVENT+2
+    pygame.time.set_timer(PRINTEVENT,1)
     pygame.time.set_timer(MOVEEVENT,stepDuration)
+    myfont = pygame.font.SysFont('DroidSansMono',30,bold=True)     
     #############################################
     zombieList = allZombies()
     #zombieList.addZombie(lat,12,14)
@@ -38,40 +39,47 @@ def main():
     #cellList.addCell(lat,10,20)
     #cellList.addCell(lat,10,20) 
     foodList = allFood()
-    #foodList.addFood(lat,10,9)
+    foodList.addFood(lat,10,9)
     #############################################
     window.draw_background()
     running = 1
-    
+    lat.updateMaps(cellList,zombieList,motherList)
+    cellList.updateCells(window.display,lat,foodList,cellList)
+    zombieList.updateZombies(window.display,lat,cellList) 
+    motherList.updateMothers(window.display,lat,foodList)
+    foodList.updateFoods(window.display,lat)
+
     while running:
-        event = pygame.event.poll()
         
+        event = pygame.event.poll()         
+
         if event.type == pygame.QUIT:
             running = 0
         elif event.type == MOVEEVENT:
-            window.draw_background()
-            #####################################
-            # General drone cleanup
+
             killDying(lat,cellList)
             createChildren(lat,cellList) 
-            #####################################
-            # Update and color diffusion maps
             lat.updateMaps(cellList,zombieList,motherList)
-            lat.colorHeatMap(window.display)
-            lat.colorSmellMap(window.display)
-            #####################################
-            # Update cells
+            
             cellList.updateCells(window.display,lat,foodList,cellList)
             zombieList.updateZombies(window.display,lat,cellList) 
             motherList.updateMothers(window.display,lat,foodList)
-            foodList.updateFoods(window.display,lat)
-            #####################################
-                  
-            lat.colorWallMap(window.display)
-            drawQuantities(window.display,cellList)
-
+    
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
                 running = 0
+        
+        elif event.type == PRINTEVENT:
+
+            window.draw_background()
+            drawQuantities(window.display,cellList,myfont)
+            lat.colorWallMap(window.display) 
+            lat.colorHeatMap(window.display)
+            lat.colorSmellMap(window.display)
+            cellList.printCells(window.display,lat)          
+            zombieList.printZombies(window.display,lat)
+            motherList.printMothers(window.display,lat)
+            foodList.updateFoods(window.display,lat)
+
         elif event.type == pygame.MOUSEBUTTONUP:
             placeFood(lat,foodList) 
             

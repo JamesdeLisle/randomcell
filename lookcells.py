@@ -8,9 +8,8 @@ def discreteDraw(values,probabilities):
     out = values[np.digitize(random_sample(1),bins)]
     return round(out[0])
 
-def drawQuantities(screen,cellList):
-
-    myfont = pygame.font.SysFont('DroidSansMono',30,bold=True) 
+def drawQuantities(screen,cellList,myfont):
+ 
     label = myfont.render('Drone Count: %d' % (len(cellList.celist)),4,(0,0,0))
     screen.blit(label,(150,30))
 

@@ -14,8 +14,10 @@ class allCells:
         self.celist.append(drone(lattice,x,y))
 
     def updateCells(self,screen,lattice,foodList,cellList):
-        map(lambda cell: cell.printCell(screen,lattice), self.celist)
         map(lambda cell: cell.updateCell(lattice,foodList,cellList), self.celist)
+
+    def printCells(self,screen,lattice):
+        map(lambda cell: cell.printCell(screen,lattice), self.celist)
 
     def numberOfCells(self):
         return len(self.celist)
@@ -39,8 +41,10 @@ class allZombies:
         self.zombieList.append(zombie(lattice,x,y))
 
     def updateZombies(self,screen,lattice,cellList):
-        map(lambda zombie: zombie.printCell(screen,lattice), self.zombieList)
         map(lambda zombie: zombie.updateCell(lattice,cellList), self.zombieList)
+
+    def printZombies(self,screen,lattice):
+        map(lambda zombie: zombie.printCell(screen,lattice), self.zombieList)
 
     def numberOfCells(self):
         return len(self.zombieList)
@@ -53,8 +57,10 @@ class allMothers:
         self.motherList.append(mother(lattice,x,y))
 
     def updateMothers(self,screen,lattice,foodList):
-        map(lambda mother: mother.printCell(screen,lattice), self.motherList)
         map(lambda mother: mother.updateCell(lattice,foodList), self.motherList)
+
+    def printMothers(self,screen,lattice):
+        map(lambda mother: mother.printCell(screen,lattice), self.motherList)
 
     def numberOfCells(self):
         return len(self.motherList)

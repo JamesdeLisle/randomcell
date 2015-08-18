@@ -81,7 +81,7 @@ class cell(object):
         weightsDanger.append(moveNowhere * self.hunger)
         normDanger = sum(weightsDanger)
         weightsDesire.append(moveNowhere * self.hunger)
-        normDesire = sum(weightsDesire) 
+        normDesire = sum(weightsDesire)
         weightsDanger = [ a/normDanger for a in weightsDanger ]
         weightsDesire = [ a/normDesire for a in weightsDesire ]
         weightsDanger = [ round(a,2) for a in weightsDanger ]

@@ -23,9 +23,8 @@ class zombie(cell):
        
         self.eatFood(lattice,cellList)
         self.moveCell(lattice)
-        
-
+    
     def printCell(self,screen,lattice):
         pygame.draw.circle(screen,(138,43,226),(lattice.points[self.x][self.y].location[0],lattice.points[self.x][self.y].location[1]),10)
 
-
+    
