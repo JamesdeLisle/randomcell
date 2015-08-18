@@ -25,12 +25,13 @@ def main():
     PRINTEVENT = pygame.USEREVENT+2
     pygame.time.set_timer(PRINTEVENT,1)
     pygame.time.set_timer(MOVEEVENT,stepDuration)
-    myfont = pygame.font.SysFont('DroidSansMono',30,bold=True)     
+    myfont = pygame.font.SysFont('DroidSansMono',30,bold=True)   
+
     #############################################
     zombieList = allZombies()
-    #zombieList.addZombie(lat,12,14)
+    zombieList.addZombie(lat,12,14)
     motherList = allMothers()
-    #motherList.addMother(lat,6,5)
+    motherList.addMother(lat,6,5)
     cellList = allCells()
     cellList.addCell(lat,4,6)
     cellList.addCell(lat,6,8)
@@ -39,8 +40,9 @@ def main():
     #cellList.addCell(lat,10,20)
     #cellList.addCell(lat,10,20) 
     foodList = allFood()
-    foodList.addFood(lat,10,9)
+    #foodList.addFood(lat,10,9)
     #############################################
+    
     window.draw_background()
     running = 1
     lat.updateMaps(cellList,zombieList,motherList)
@@ -56,20 +58,15 @@ def main():
         if event.type == pygame.QUIT:
             running = 0
         elif event.type == MOVEEVENT:
-
             killDying(lat,cellList)
             createChildren(lat,cellList) 
-            lat.updateMaps(cellList,zombieList,motherList)
-            
             cellList.updateCells(window.display,lat,foodList,cellList)
             zombieList.updateZombies(window.display,lat,cellList) 
             motherList.updateMothers(window.display,lat,foodList)
-    
+            lat.updateMaps(cellList,zombieList,motherList) 
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
-                running = 0
-        
+                running = 0  
         elif event.type == PRINTEVENT:
-
             window.draw_background()
             drawQuantities(window.display,cellList,myfont)
             lat.colorWallMap(window.display) 

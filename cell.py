@@ -8,6 +8,8 @@ class cell(object):
     def __init__(self,lattice,x,y):
         self.x = x
         self.y = y
+        self.previous_x = 0
+        self.previous_y = 0
         self.hunger = 0.0
     
     def whereMotives(self,lattice):

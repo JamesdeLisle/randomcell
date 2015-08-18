@@ -41,6 +41,7 @@ class drone(cell):
         blue = keepInBoundaries(0,blue,255)
         xpos = lattice.points[self.x][self.y].location[0]
         ypos = lattice.points[self.x][self.y].location[1]
+
         pygame.draw.circle(screen,(0,green,blue),(xpos,ypos),10)
 
 
