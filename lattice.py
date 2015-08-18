@@ -136,8 +136,7 @@ class lattice:
                 ypos = self.points[tik1][tik2].location[1]
                 if self.smellMap[tik1][tik2] > 1e-2 and cValue < 250:
                     pygame.draw.circle(screen,(cValue,255,cValue),(xpos,ypos),4)
-                
-     
+                 
     def colorHeatMap(self,screen):
         
         for tik1 in range(self.height):

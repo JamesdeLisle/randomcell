@@ -18,12 +18,13 @@ def main():
     
     width = 70
     height = 30
+    stepDuration = 250
     window = grid_window(width,height)
     lat = lattice(width,height)
     MOVEEVENT = pygame.USEREVENT+1
     DOUBLEMOVEEVENT = pygame.USEREVENT+1
     pygame.time.set_timer(DOUBLEMOVEEVENT,125)
-    pygame.time.set_timer(MOVEEVENT,500)
+    pygame.time.set_timer(MOVEEVENT,stepDuration)
     #############################################
     zombieList = allZombies()
     zombieList.addZombie(lat,12,14)
@@ -68,7 +69,7 @@ def main():
                   
             lat.colorWallMap(window.display)
             drawQuantities(window.display,cellList)
-            
+
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
                 running = 0
         elif event.type == pygame.MOUSEBUTTONUP:
