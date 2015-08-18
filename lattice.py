@@ -53,97 +53,38 @@ class lattice:
 
         self.emptyMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         
-
-    def updateHeatMap(self,cellList):
-
-        tempMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
-        for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                self.heatMap[tik1][tik2] = self.heatMap[tik1][tik2] * 0.95 
-                if self.cellMap[tik1][tik2]:
-                    for tik5 in range(len(cellList.celist)):
-                        if cellList.celist[tik5].x == tik1 and cellList.celist[tik5].y == tik2:
-                            self.heatMap[tik1][tik2] = (1 - cellList.celist[tik5].hunger) * 2.0
-                
-                adjCells = getAdjacent(self.wallMap,tik1,tik2)
-
-                if len(adjCells) == 0:
-                    pass
-                else:
-                    scale = 1.0/len(adjCells[:])
-                    for tik3 in range(len(adjCells[:])):
-                        xpos = adjCells[tik3][0]
-                        ypos = adjCells[tik3][1]
-                        tempMap[xpos][ypos] = tempMap[xpos][ypos] + self.heatMap[tik1][tik2] * scale
-                        
-        for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                if tempMap[tik1][tik2] < 1e-2:
-                    tempMap[tik1][tik2] = 0
-        self.heatMap = tempMap
-    
-    def updateSmellMap(self):
+    def updateMaps(self,cellList,zombieList,motherList):
+       
+        tempHeatMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
+        tempSmellMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
+        tempZombiePherMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
+        tempMotherPherMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         
-        tempMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         for tik1 in range(self.height):
             for tik2 in range(self.width):
-                if self.foodMap[tik1][tik2]:
-                    tempMap[tik1][tik2] = 1.0
-                tempMap[tik1][tik2] = tempMap[tik1][tik2] * 0.8 
-                
-                adjCells = getAdjacent(self.wallMap,tik1,tik2)
-
-                if len(adjCells) == 0:
-                    pass
-                else:
-                    scale = 1.0/len(adjCells[:])
-                    
-                    for tik3 in range(len(adjCells[:])):
-                        xpos = adjCells[tik3][0]
-                        ypos = adjCells[tik3][1]
-                        tempMap[xpos][ypos] = tempMap[xpos][ypos] + self.smellMap[tik1][tik2] * scale 
-                        
-        self.smellMap = tempMap
-   
-    def updateMotherPherMap(self,motherList):
-
-        tempMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
-        for tik1 in range(self.height):
-            for tik2 in range(self.width):
+                self.heatMap[tik1][tik2] = self.heatMap[tik1][tik2] * 0.95
+                self.smellMap[tik1][tik2] = self.smellMap[tik1][tik2] * 0.8
                 self.motherPherMap[tik1][tik2] = self.motherPherMap[tik1][tik2] * 0.95 
+                self.zombiePherMap[tik1][tik2] = self.zombiePherMap[tik1][tik2] * 0.95
+
+                if self.cellMap[tik1][tik2]:
+                    for tik3 in range(len(cellList.celist)):
+                        if cellList.celist[tik3].x == tik1 and cellList.celist[tik3].y == tik2:
+                            self.heatMap[tik1][tik2] = (1 - cellList.celist[tik3].hunger) * 2.0
+                
+                if self.foodMap[tik1][tik2]:
+                    self.smellMap[tik1][tik2] = 1.0
+                
                 if self.motherMap[tik1][tik2]:
-                    for tik5 in range(len(motherList.motherList)):
-                        if motherList.motherList[tik5].x == tik1 and motherList.motherList[tik5].y == tik2:
+                    for tik3 in range(len(motherList.motherList)):
+                        if motherList.motherList[tik3].x == tik1 and motherList.motherList[tik3].y == tik2:
                             self.motherPherMap[tik1][tik2] = 2.0
 
-                adjCells = getAdjacent(self.wallMap,tik1,tik2)
-
-                if len(adjCells) == 0:
-                    pass
-                else:
-                    scale = 1.0/len(adjCells[:])
-                    for tik3 in range(len(adjCells[:])):
-                        xpos = adjCells[tik3][0]
-                        ypos = adjCells[tik3][1]
-                        tempMap[xpos][ypos] = tempMap[xpos][ypos] + self.motherPherMap[tik1][tik2] * scale
-                        
-        for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                if tempMap[tik1][tik2] < 1e-2:
-                    tempMap[tik1][tik2] = 0
-        self.motherPherMap = tempMap
-
-    def updateZombiePherMap(self,zombieList):
-
-        tempMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
-        for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                self.zombiePherMap[tik1][tik2] = self.zombiePherMap[tik1][tik2] * 0.95 
                 if self.zombieCellMap[tik1][tik2]:
-                    for tik5 in range(len(zombieList.zombieList)):
-                        if zombieList.zombieList[tik5].x == tik1 and zombieList.zombieList[tik5].y == tik2:
+                    for tik3 in range(len(zombieList.zombieList)):
+                        if zombieList.zombieList[tik3].x == tik1 and zombieList.zombieList[tik3].y == tik2:
                             self.zombiePherMap[tik1][tik2] = 2.0
-
+                
                 adjCells = getAdjacent(self.wallMap,tik1,tik2)
 
                 if len(adjCells) == 0:
@@ -153,15 +94,22 @@ class lattice:
                     for tik3 in range(len(adjCells[:])):
                         xpos = adjCells[tik3][0]
                         ypos = adjCells[tik3][1]
-                        tempMap[xpos][ypos] = tempMap[xpos][ypos] + self.zombiePherMap[tik1][tik2] * scale
+                        tempHeatMap[xpos][ypos] = tempHeatMap[xpos][ypos] + self.heatMap[tik1][tik2] * scale
+                        tempSmellMap[xpos][ypos] = tempSmellMap[xpos][ypos] + self.smellMap[tik1][tik2] * scale
+                        tempZombiePherMap[xpos][ypos] = tempZombiePherMap[xpos][ypos] + self.zombiePherMap[tik1][tik2] * scale
+                        tempMotherPherMap[xpos][ypos] = tempMotherPherMap[xpos][ypos] + self.motherPherMap[tik1][tik2] * scale
                         
-        for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                if tempMap[tik1][tik2] < 1e-1:
-                    tempMap[tik1][tik2] = 0
-        
-        self.zombiePherMap = tempMap
+                if tempHeatMap[tik1][tik2] < 1e-2:
+                    tempHeatMap[tik1][tik2] = 0
+                if tempMotherPherMap[tik1][tik2] < 1e-2:
+                    tempMotherPherMap[tik1][tik2] = 0
+                if tempZombiePherMap[tik1][tik2] < 1e-1:
+                    tempZombiePherMap[tik1][tik2] = 0
 
+        self.heatMap = tempHeatMap
+        self.smellMap = tempSmellMap
+        self.motherPherMap = tempMotherPherMap
+        self.zombiePherMap = tempZombiePherMap
 
     def colorWallMap(self,screen):
 
