@@ -46,14 +46,16 @@ class drone(cell):
         xmax = lattice.points[self.x][self.y].location[0]
         ymin = lattice.points[self.previous_x][self.previous_y].location[1]
         ymax = lattice.points[self.x][self.y].location[1]
-        print(xmin)
-        print(xmax)
+  
         xVec = np.linspace(xmin,xmax,nSteps).tolist()
         xVec = [ int(round(x)) for x in xVec ]
         yVec = np.linspace(ymin,ymax,nSteps).tolist()
         yVec = [ int(round(x)) for x in xVec ]
+      
+        
 
         for tik in range(nSteps):
+            print(xVec[tik])
             pygame.draw.circle(screen,(0,green,blue),(xVec[tik],yVec[tik]),10)
 
 
