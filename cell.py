@@ -8,8 +8,8 @@ class cell(object):
     def __init__(self,lattice,x,y):
         self.x = x
         self.y = y
-        self.next_x = 0
-        self.next_y = 0
+        self.previous_x = 0
+        self.previous_y = 0
         self.hunger = 0.0
     
     def whereMotives(self,lattice):
@@ -125,6 +125,8 @@ class cell(object):
         shift = self.generateNextPosition(lattice,weights)
          
         self.updateCellMap(lattice,False)
+        self.previous_x = self.x
+        self.previous_y = self.y
         self.x = self.x + shift[0]
         self.y = self.y + shift[1]
         self.updateCellMap(lattice,True)
