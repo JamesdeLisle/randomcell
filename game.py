@@ -10,7 +10,10 @@ from zombie import *
 from drone import *
 from mother import *
 from grid_window import *
+from lookcells import *    
     
+pygame.init()
+
 def main():
     
     width = 70
@@ -38,7 +41,7 @@ def main():
     #############################################
     window.draw_background()
     running = 1
-
+    
     while running:
         event = pygame.event.poll()
         
@@ -54,18 +57,18 @@ def main():
             lat.colorSmellMap(window.display)
             lat.updateMotherPherMap(motherList)
             lat.updateZombiePherMap(zombieList)
-            zombieList.updateZombies(window.display,lat,cellList)
             cellList.updateCells(window.display,lat,foodList,cellList)
+            zombieList.updateZombies(window.display,lat,cellList) 
             motherList.updateMothers(window.display,lat,foodList)
             foodList.updateFoods(window.display,lat)
-
+            
             lat.colorWallMap(window.display)
-
+            drawQuantities(window.display,cellList)
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
                 running = 0
         elif event.type == pygame.MOUSEBUTTONUP:
             placeFood(lat,foodList) 
 
-        pygame.display.update()
+        pygame.display.update() 
 
 main()

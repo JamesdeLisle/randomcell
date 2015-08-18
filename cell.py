@@ -53,7 +53,7 @@ class cell(object):
         
         if self.species == 'drone':
             moveToDesire = 8.0
-            moveAwayDanger = 100.0
+            moveAwayDanger = 1000.0
             moveToOther = 1.0
             moveNowhere = 5.0
         elif self.species == 'zombie':

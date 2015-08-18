@@ -8,6 +8,12 @@ def discreteDraw(values,probabilities):
     out = values[np.digitize(random_sample(1),bins)]
     return round(out[0])
 
+def drawQuantities(screen,cellList):
+
+    myfont = pygame.font.SysFont('DroidSansMono',30,bold=True) 
+    label = myfont.render('Drone Count: %d' % (len(cellList.celist)),4,(0,0,0))
+    screen.blit(label,(150,30))
+
 def wrapBoundaries(min_, val, max_):
     return min_ if val > max_ else max_ if val < min_ else val
 
