@@ -49,7 +49,7 @@ def main():
     foodList.updateFoods(window.display,lat)
     printStep = 0
     print_flag = 0
-    printStep_max = 40
+    printStep_max = 10
     
     while running:
         
@@ -76,7 +76,7 @@ def main():
             ############################################
             # Color Maps
             lat.colorWallMap(window.display) 
-            lat.colorHeatMap(window.display)
+            lat.colorHeatMap(window.display,printStep,printStep_max)
             lat.colorSmellMap(window.display)
             ############################################
             # Color cell movement

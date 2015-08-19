@@ -43,6 +43,7 @@ class lattice:
         self.points = [ [ latAttribute(x,y) for x in range(self.width)] for y in range(self.height)]
         self.wallMap = createWallMap(width,height)
         self.heatMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
+        self.heatMapOld = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         self.cellMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.foodMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.smellMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
@@ -105,7 +106,8 @@ class lattice:
                     tempMotherPherMap[tik1][tik2] = 0
                 if tempZombiePherMap[tik1][tik2] < 1e-1:
                     tempZombiePherMap[tik1][tik2] = 0
-
+        
+        self.heatMapOld = self.heatMap
         self.heatMap = tempHeatMap
         self.smellMap = tempSmellMap
         self.motherPherMap = tempMotherPherMap
@@ -133,12 +135,14 @@ class lattice:
                 if self.smellMap[tik1][tik2] > 1e-2 and cValue < 250:
                     pygame.draw.circle(screen,(cValue,255,cValue),(xpos,ypos),4)
                  
-    def colorHeatMap(self,screen):
+    def colorHeatMap(self,screen,printStep,printStep_max):
         
         for tik1 in range(self.height):
             for tik2 in range(self.width): 
-                cValue = round((1-self.heatMap[tik1][tik2])*255)
-                cValue = keepInBoundaries(0,cValue,255) 
+                cValue_max = round((1-self.heatMap[tik1][tik2])*255)
+                cValue_min = round((1-self.heatMapOld[tik1][tik2])*255)
+                cValueVec = np.linspace(cValue_min,cValue_max,printStep_max)
+                cValue = keepInBoundaries(0,cValueVec[printStep],255) 
                 xpos = self.points[tik1][tik2].location[0]-9
                 ypos = self.points[tik1][tik2].location[1]-9
                 width = 18
