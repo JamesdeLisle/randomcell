@@ -31,4 +31,4 @@ class hero(cell):
 
     def updateCell(self,lattice,shift):
 
-        self.moveCell(lattice,shift)        
+        self.moveCell(lattice,shift) 

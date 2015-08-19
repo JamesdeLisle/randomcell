@@ -56,11 +56,13 @@ def main():
     
     while running:
         
-        event = pygame.event.poll() 
-        
+        event = pygame.event.poll()  
+        key = pygame.key.get_pressed()
+        shift = detectInput(key,shift)
+         
         if event.type == pygame.QUIT:
             running = 0
-        elif event.type == MOVEEVENT:
+        elif event.type == MOVEEVENT: 
             killDying(lat,cellList)
             createChildren(lat,cellList) 
             zombieList.updateZombies(window.display,lat,cellList)
@@ -68,6 +70,7 @@ def main():
             motherList.updateMothers(window.display,lat,foodList)
             heroCell.updateCell(lat,shift)
             lat.updateMaps(cellList,zombieList,motherList)
+            shift = [0,0]
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
                 running = 0 
             print_flag = 1
