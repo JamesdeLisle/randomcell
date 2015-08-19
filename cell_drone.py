@@ -43,20 +43,9 @@ class drone(cell):
         blue = round(self.hunger*255)
         green = keepInBoundaries(0,green,255)
         blue = keepInBoundaries(0,blue,255)
-        xpos = lattice.points[self.x][self.y].location[0]
-        ypos = lattice.points[self.x][self.y].location[1]
-
-        xmin = lattice.points[self.previous_x][self.previous_y].location[0]
-        xmax = lattice.points[self.x][self.y].location[0]
-        ymin = lattice.points[self.previous_x][self.previous_y].location[1]
-        ymax = lattice.points[self.x][self.y].location[1]
-
-        xVec = np.linspace(xmin,xmax,printStep_max).tolist()
-        yVec = np.linspace(ymin,ymax,printStep_max).tolist()
-
-        xVec = [ int(round(x)) for x in xVec ]
-        yVec = [ int(round(x)) for x in yVec ]
-
+        
+        xVec,yVec = self.generateAnimationVectors(lattice,printStep_max)
+        
         pygame.draw.circle(screen,(0,0,0),(xVec[printStep],yVec[printStep]),10)
         pygame.draw.circle(screen,(0,green,blue),(xVec[printStep],yVec[printStep]),9)
         

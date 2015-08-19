@@ -107,7 +107,7 @@ class cell(object):
         motiveDirection = self.whereMotives(lattice)
         weights = self.weightWalk(lattice,motiveDirection) 
         shift = self.generateNextPosition(lattice,weights)
-         
+ 
         self.updateCellMap(lattice,False)
         self.previous_x = self.x
         self.previous_y = self.y
@@ -120,6 +120,21 @@ class cell(object):
         maxLx = lattice.height
         self.x = wrapBoundaries(minLx,self.x,maxLx)
         self.y = wrapBoundaries(minLy,self.y,maxLy)
+
+    def generateAnimationVectors(self,lattice,printStep_max):
+        
+        xpos = lattice.points[self.x][self.y].location[0]
+        ypos = lattice.points[self.x][self.y].location[1]
+        xmin = lattice.points[self.previous_x][self.previous_y].location[0]
+        xmax = lattice.points[self.x][self.y].location[0]
+        ymin = lattice.points[self.previous_x][self.previous_y].location[1]
+        ymax = lattice.points[self.x][self.y].location[1]
+        xVec = np.linspace(xmin,xmax,printStep_max).tolist()
+        yVec = np.linspace(ymin,ymax,printStep_max).tolist()
+        xVec = [ int(round(x)) for x in xVec ]
+        yVec = [ int(round(x)) for x in yVec ]
+
+        return xVec,yVec
         
     
  

@@ -74,7 +74,7 @@ class lattice:
                             self.heatMap[tik1][tik2] = (1 - cellList.celist[tik3].hunger) * 2.0
                 
                 if self.foodMap[tik1][tik2]:
-                    self.smellMap[tik1][tik2] = 1.0
+                    self.smellMap[tik1][tik2] = 10.0
                 
                 if self.motherMap[tik1][tik2]:
                     for tik3 in range(len(motherList.motherList)):
@@ -128,7 +128,7 @@ class lattice:
         
         for tik1 in range(self.height):
             for tik2 in range(self.width): 
-                cValue = round((1-self.smellMap[tik1][tik2])*255/1.5)
+                cValue = round((1-self.smellMap[tik1][tik2])*255)
                 cValue = keepInBoundaries(0,cValue,255)
                 xpos = self.points[tik1][tik2].location[0]
                 ypos = self.points[tik1][tik2].location[1]

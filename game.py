@@ -18,7 +18,7 @@ def main():
     
     width = 70
     height = 30
-    stepDuration = 500
+    stepDuration = 400
     window = grid_window(width,height)
     lat = lattice(width,height)
     MOVEEVENT = pygame.USEREVENT+1
