@@ -16,8 +16,8 @@ class allCells:
     def updateCells(self,screen,lattice,foodList,cellList):
         map(lambda cell: cell.updateCell(lattice,foodList,cellList), self.celist)
 
-    def printCells(self,screen,lattice):
-        map(lambda cell: cell.printCell(screen,lattice), self.celist)
+    def printCells(self,screen,lattice,printStep,printStep_max):
+        map(lambda cell: cell.printCell(screen,lattice,printStep,printStep_max), self.celist)
 
     def numberOfCells(self):
         return len(self.celist)
@@ -43,8 +43,8 @@ class allZombies:
     def updateZombies(self,screen,lattice,cellList):
         map(lambda zombie: zombie.updateCell(lattice,cellList), self.zombieList)
 
-    def printZombies(self,screen,lattice):
-        map(lambda zombie: zombie.printCell(screen,lattice), self.zombieList)
+    def printZombies(self,screen,lattice,printStep,printStep_max):
+        map(lambda zombie: zombie.printCell(screen,lattice,printStep,printStep_max), self.zombieList)
 
     def numberOfCells(self):
         return len(self.zombieList)
@@ -59,8 +59,8 @@ class allMothers:
     def updateMothers(self,screen,lattice,foodList):
         map(lambda mother: mother.updateCell(lattice,foodList), self.motherList)
 
-    def printMothers(self,screen,lattice):
-        map(lambda mother: mother.printCell(screen,lattice), self.motherList)
+    def printMothers(self,screen,lattice,printStep,printStep_max):
+        map(lambda mother: mother.printCell(screen,lattice,printStep,printStep_max), self.motherList)
 
     def numberOfCells(self):
         return len(self.motherList)

@@ -117,8 +117,8 @@ class lattice:
             for tik2 in range(self.width):
                 xpos = self.points[tik1][tik2].location[0]-9
                 ypos = self.points[tik1][tik2].location[1]-9
-                width = 18
-                height = 18
+                width = 19
+                height = 19
                 if self.wallMap[tik1][tik2]:
                     pygame.draw.rect(screen,(0,0,0),(xpos,ypos,width,height))
     

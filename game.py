@@ -35,12 +35,11 @@ def main():
     cellList = allCells()
     cellList.addCell(lat,4,6)
     cellList.addCell(lat,6,8)
-    #cellList.addCell(lat,8,10)
-    #cellList.addCell(lat,10,20)
-    #cellList.addCell(lat,10,20)
-    #cellList.addCell(lat,10,20) 
+    cellList.addCell(lat,8,10)
+    cellList.addCell(lat,10,20)
+    cellList.addCell(lat,10,20)
+    cellList.addCell(lat,10,20) 
     foodList = allFood()
-    #foodList.addFood(lat,10,9)
     #############################################
     
     window.draw_background()
@@ -50,11 +49,14 @@ def main():
     zombieList.updateZombies(window.display,lat,cellList) 
     motherList.updateMothers(window.display,lat,foodList)
     foodList.updateFoods(window.display,lat)
+    printStep = 0
+    printStep_max = 20
+    print_flag = 0
 
     while running:
         
-        event = pygame.event.poll()         
-
+        event = pygame.event.poll() 
+        
         if event.type == pygame.QUIT:
             running = 0
         elif event.type == MOVEEVENT:
@@ -63,23 +65,30 @@ def main():
             cellList.updateCells(window.display,lat,foodList,cellList)
             zombieList.updateZombies(window.display,lat,cellList) 
             motherList.updateMothers(window.display,lat,foodList)
-            lat.updateMaps(cellList,zombieList,motherList) 
+            lat.updateMaps(cellList,zombieList,motherList)
+
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
-                running = 0  
-        elif event.type == PRINTEVENT:
+                running = 0 
+            print_flag = 1
+        elif event.type == pygame.MOUSEBUTTONUP:
+            placeFood(lat,foodList) 
+ 
+        if print_flag:
             window.draw_background()
             drawQuantities(window.display,cellList,myfont)
             lat.colorWallMap(window.display) 
             lat.colorHeatMap(window.display)
             lat.colorSmellMap(window.display)
-            cellList.printCells(window.display,lat)          
-            zombieList.printZombies(window.display,lat)
-            motherList.printMothers(window.display,lat)
+            cellList.printCells(window.display,lat,printStep,printStep_max)          
+            zombieList.printZombies(window.display,lat,printStep,printStep_max)
+            motherList.printMothers(window.display,lat,printStep,printStep_max)
             foodList.updateFoods(window.display,lat)
-
-        elif event.type == pygame.MOUSEBUTTONUP:
-            placeFood(lat,foodList) 
-            
+            printStep += 1
+       
+            if printStep == printStep_max:
+                print_flag = 0
+                printStep = 0
+         
         pygame.display.update() 
     
 main()

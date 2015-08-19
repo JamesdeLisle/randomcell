@@ -22,7 +22,23 @@ class mother(cell):
         self.dropFood(lattice,foodList)
         self.foodDropTimer = self.foodDropTimer - 0.1
 
-    def printCell(self,screen,lattice):
-        pygame.draw.circle(screen,(255,165,0),(lattice.points[self.x][self.y].location[0],lattice.points[self.x][self.y].location[1]),10)
+    def printCell(self,screen,lattice,printStep,printStep_max):
+        
+        xpos = lattice.points[self.x][self.y].location[0]
+        ypos = lattice.points[self.x][self.y].location[1]
+        
+        xmin = lattice.points[self.previous_x][self.previous_y].location[0]
+        xmax = lattice.points[self.x][self.y].location[0]
+        ymin = lattice.points[self.previous_x][self.previous_y].location[1]
+        ymax = lattice.points[self.x][self.y].location[1]
+
+        xVec = np.linspace(xmin,xmax,printStep_max).tolist()
+        yVec = np.linspace(ymin,ymax,printStep_max).tolist()
+
+        xVec = [ int(round(x)) for x in xVec ]
+        yVec = [ int(round(x)) for x in yVec ]
+        
+        pygame.draw.circle(screen,(0,0,0),(xVec[printStep],yVec[printStep]),10)
+        pygame.draw.circle(screen,(255,165,0),(xVec[printStep],yVec[printStep]),9)
 
 

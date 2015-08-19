@@ -60,7 +60,7 @@ class cell(object):
             moveNowhere = 5.0
         elif self.species == 'zombie':
             moveToDesire = 10.0
-            moveAwayDanger = 10.0
+            moveAwayDanger = 20.0
             moveToOther = 1.0
             moveNowhere = 5.0
         elif self.species == 'mother':
@@ -85,7 +85,7 @@ class cell(object):
         weightsDesire.append(moveNowhere * self.hunger)
         normDesire = sum(weightsDesire)
         weightsDanger = [ a/normDanger for a in weightsDanger ]
-        weightsDesire = [ a/normDesire for a in weightsDesire ]
+        weightsDesire = [ a/normDesire for a in weightsDesire ] 
         weightsDanger = [ round(a,2) for a in weightsDanger ]
         weightsDesire = [ round(a,2) for a in weightsDesire ]
         weights = [ a*b for a,b in zip(weightsDanger,weightsDesire)]

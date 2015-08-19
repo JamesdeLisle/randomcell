@@ -33,7 +33,7 @@ class drone(cell):
         if self.hunger > 1.0:
             self.deathsdoor = self.deathsdoor + 0.1
 
-    def printCell(self,screen,lattice):
+    def printCell(self, screen, lattice, printStep, printStep_max):
         
         green = round((1-self.hunger)*255) 
         blue = round(self.hunger*255)
@@ -42,6 +42,19 @@ class drone(cell):
         xpos = lattice.points[self.x][self.y].location[0]
         ypos = lattice.points[self.x][self.y].location[1]
 
-        pygame.draw.circle(screen,(0,green,blue),(xpos,ypos),10)
+        xmin = lattice.points[self.previous_x][self.previous_y].location[0]
+        xmax = lattice.points[self.x][self.y].location[0]
+        ymin = lattice.points[self.previous_x][self.previous_y].location[1]
+        ymax = lattice.points[self.x][self.y].location[1]
+
+        xVec = np.linspace(xmin,xmax,printStep_max).tolist()
+        yVec = np.linspace(ymin,ymax,printStep_max).tolist()
+
+        xVec = [ int(round(x)) for x in xVec ]
+        yVec = [ int(round(x)) for x in yVec ]
+
+        pygame.draw.circle(screen,(0,0,0),(xVec[printStep],yVec[printStep]),10)
+        pygame.draw.circle(screen,(0,green,blue),(xVec[printStep],yVec[printStep]),9)
+        
 
 
