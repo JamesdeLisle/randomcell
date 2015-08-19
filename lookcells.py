@@ -103,19 +103,7 @@ def getAdjacent(wallMap,x,y):
     
     return adjCells
                    
-def giveCoord(x,y):
-    
-    incoord = [x,y]
-    outcoord = [0,0]
-    for tik in range(2):
-        if incoord[tik] > 29:
-            outcoord[tik] = 0
-        elif incoord[tik] < 0:
-            outcoord[tik] = 29
-        else:
-            outcoord = incoord
 
-    return outcoord
 
 
 
