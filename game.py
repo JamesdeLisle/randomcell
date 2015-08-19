@@ -10,8 +10,9 @@ from cell_zombie import *
 from cell_drone import *
 from cell_mother import *
 from grid_window import *
-from lookcells import *    
-    
+from utilityFunctions import *    
+from cell_hero import *
+
 pygame.init()
 
 def main():
@@ -26,6 +27,7 @@ def main():
     myfont = pygame.font.SysFont('DroidSansMono',30,bold=True)   
 
     #############################################
+    heroCell = hero(lat,20,40)
     zombieList = allZombies()
     zombieList.addZombie(lat,12,14)
     motherList = allMothers()
@@ -50,6 +52,7 @@ def main():
     printStep = 0
     print_flag = 0
     printStep_max = 10
+    shift = [0,0]
     
     while running:
         
@@ -63,6 +66,7 @@ def main():
             zombieList.updateZombies(window.display,lat,cellList)
             cellList.updateCells(window.display,lat,foodList,cellList) 
             motherList.updateMothers(window.display,lat,foodList)
+            heroCell.updateCell(lat,shift)
             lat.updateMaps(cellList,zombieList,motherList)
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
                 running = 0 
@@ -83,6 +87,7 @@ def main():
             cellList.printCells(window.display,lat,printStep,printStep_max)          
             zombieList.printZombies(window.display,lat,printStep,printStep_max)
             motherList.printMothers(window.display,lat,printStep,printStep_max)
+            heroCell.printCell(window.display,lat,printStep,printStep_max)
             ############################################
             foodList.updateFoods(window.display,lat)
             printStep += 1

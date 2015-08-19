@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from lookcells import *
+from utilityFunctions import *
 from scipy import stats
 
 class cell(object):
@@ -101,6 +101,8 @@ class cell(object):
             lattice.zombieCellMap[self.x][self.y] = flag
         elif self.species == 'mother':
             lattice.motherMap[self.x][self.y] = flag
+        elif self.species == 'hero':
+            lattice.heroMap[self.x][self.y] = flag
 
     def moveCell(self,lattice):
         

@@ -1,5 +1,5 @@
 import pygame
-from lookcells import *
+from utilityFunctions import *
 from levelgen import *
 
 
@@ -51,7 +51,7 @@ class lattice:
         self.motherMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.motherPherMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         self.zombiePherMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
-
+        self.heroMap = [ [ False for x in range(self.width)] for y in range(self.height)]
         self.emptyMap = [ [ 0.0 for x in range(self.width)] for y in range(self.height)]
         
     def updateMaps(self,cellList,zombieList,motherList):

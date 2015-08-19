@@ -1,4 +1,4 @@
-from lookcells import *
+from utilityFunctions import *
 from cell import *
 
 class zombie(cell):
