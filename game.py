@@ -62,8 +62,8 @@ def main():
         elif event.type == MOVEEVENT:
             killDying(lat,cellList)
             createChildren(lat,cellList) 
-            cellList.updateCells(window.display,lat,foodList,cellList)
-            zombieList.updateZombies(window.display,lat,cellList) 
+            zombieList.updateZombies(window.display,lat,cellList)
+            cellList.updateCells(window.display,lat,foodList,cellList) 
             motherList.updateMothers(window.display,lat,foodList)
             lat.updateMaps(cellList,zombieList,motherList)
 
@@ -76,12 +76,15 @@ def main():
         if print_flag:
             window.draw_background()
             drawQuantities(window.display,cellList,myfont)
+            ############################################
             lat.colorWallMap(window.display) 
             lat.colorHeatMap(window.display)
             lat.colorSmellMap(window.display)
+            ############################################
             cellList.printCells(window.display,lat,printStep,printStep_max)          
             zombieList.printZombies(window.display,lat,printStep,printStep_max)
             motherList.printMothers(window.display,lat,printStep,printStep_max)
+            ############################################
             foodList.updateFoods(window.display,lat)
             printStep += 1
        

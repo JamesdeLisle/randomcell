@@ -125,13 +125,9 @@ class lattice:
     def colorSmellMap(self,screen):
         
         for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                len(self.heatMap[0]) 
-                
+            for tik2 in range(self.width): 
                 cValue = round((1-self.smellMap[tik1][tik2])*255/1.5)
-
                 cValue = keepInBoundaries(0,cValue,255)
-                 
                 xpos = self.points[tik1][tik2].location[0]
                 ypos = self.points[tik1][tik2].location[1]
                 if self.smellMap[tik1][tik2] > 1e-2 and cValue < 250:
@@ -140,8 +136,7 @@ class lattice:
     def colorHeatMap(self,screen):
         
         for tik1 in range(self.height):
-            for tik2 in range(self.width):
-                len(self.heatMap[0]) 
+            for tik2 in range(self.width): 
                 cValue = round((1-self.heatMap[tik1][tik2])*255)
                 cValue = keepInBoundaries(0,cValue,255) 
                 xpos = self.points[tik1][tik2].location[0]-9
