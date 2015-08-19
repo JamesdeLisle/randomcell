@@ -10,6 +10,10 @@ class drone(cell):
         lattice.cellMap[x][y] = True
         self.birthometer = 0
         self.deathsdoor = 0.0
+        self.moveToDesire = 8.0
+        self.moveAwayDanger = 1000.0
+        self.moveToOther = 1.0
+        self.moveNowhere = 5.0
         
     def eatFood(self,lattice,foodList):
         

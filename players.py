@@ -1,9 +1,9 @@
 import pygame
-from drone import *
+from cell_drone import *
 from food import *
-from zombie import *
+from cell_zombie import *
 from cell import *
-from mother import *
+from cell_mother import *
 
 class allCells:
 

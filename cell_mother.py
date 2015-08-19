@@ -8,6 +8,10 @@ class mother(cell):
         self.species = 'mother'
         lattice.motherMap[x][y] = True
         self.foodDropTimer = 1.0
+        self.moveToDesire = 12.0
+        self.moveAwayDanger = 1.0
+        self.moveToOther = 1.0
+        self.moveNowhere = 5.0
 
     def dropFood(self,lattice,foodList):
         

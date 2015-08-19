@@ -8,6 +8,10 @@ class zombie(cell):
         self.species = 'zombie'
         lattice.zombieCellMap[x][y] = True
         self.hunger = 0.0
+        self.moveToDesire = 10.0
+        self.moveAwayDanger = 20.0
+        self.moveToOther = 1.0
+        self.moveNowhere = 5.0
         
     def eatFood(self,lattice,cellList):
         

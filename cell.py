@@ -53,36 +53,20 @@ class cell(object):
         adjCells = getAdjacent(lattice.wallMap,self.x,self.y)
         nCells = len(adjCells[:])
         
-        if self.species == 'drone':
-            moveToDesire = 8.0
-            moveAwayDanger = 1000.0
-            moveToOther = 1.0
-            moveNowhere = 5.0
-        elif self.species == 'zombie':
-            moveToDesire = 10.0
-            moveAwayDanger = 20.0
-            moveToOther = 1.0
-            moveNowhere = 5.0
-        elif self.species == 'mother':
-            moveToDesire = 12.0
-            moveAwayDanger = 1.0
-            moveToOther = 1.0
-            moveNowhere = 5.0
-
         for tik in range(nCells):
             if adjCells[tik][0] == motiveDirection[1][0] and adjCells[tik][1] == motiveDirection[1][1]:
-                weightsDesire.append(moveToDesire)
+                weightsDesire.append(self.moveToDesire)
             else:
-                weightsDesire.append(moveToOther)
+                weightsDesire.append(self.moveToOther)
 
             if adjCells[tik][0] == motiveDirection[0][0] and adjCells[tik][1] == motiveDirection[0][1]: 
-                    weightsDanger.append(1.0/moveAwayDanger)
+                    weightsDanger.append(1.0/self.moveAwayDanger)
             else:
-                weightsDanger.append(moveToOther)
+                weightsDanger.append(self.moveToOther)
          
-        weightsDanger.append(moveNowhere * self.hunger)
+        weightsDanger.append(self.moveNowhere * self.hunger)
         normDanger = sum(weightsDanger)
-        weightsDesire.append(moveNowhere * self.hunger)
+        weightsDesire.append(self.moveNowhere * self.hunger)
         normDesire = sum(weightsDesire)
         weightsDanger = [ a/normDanger for a in weightsDanger ]
         weightsDesire = [ a/normDesire for a in weightsDesire ] 

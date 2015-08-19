@@ -6,9 +6,9 @@ from cell import *
 from food import *
 from numpy import abs
 from players import *
-from zombie import *
-from drone import *
-from mother import *
+from cell_zombie import *
+from cell_drone import *
+from cell_mother import *
 from grid_window import *
 from lookcells import *    
     
@@ -22,8 +22,6 @@ def main():
     window = grid_window(width,height)
     lat = lattice(width,height)
     MOVEEVENT = pygame.USEREVENT+1
-    PRINTEVENT = pygame.USEREVENT+2
-    pygame.time.set_timer(PRINTEVENT,1)
     pygame.time.set_timer(MOVEEVENT,stepDuration)
     myfont = pygame.font.SysFont('DroidSansMono',30,bold=True)   
 
@@ -50,9 +48,9 @@ def main():
     motherList.updateMothers(window.display,lat,foodList)
     foodList.updateFoods(window.display,lat)
     printStep = 0
-    printStep_max = 20
     print_flag = 0
-
+    printStep_max = 40
+    
     while running:
         
         event = pygame.event.poll() 
@@ -66,21 +64,22 @@ def main():
             cellList.updateCells(window.display,lat,foodList,cellList) 
             motherList.updateMothers(window.display,lat,foodList)
             lat.updateMaps(cellList,zombieList,motherList)
-
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
                 running = 0 
             print_flag = 1
         elif event.type == pygame.MOUSEBUTTONUP:
             placeFood(lat,foodList) 
- 
+
         if print_flag:
             window.draw_background()
             drawQuantities(window.display,cellList,myfont)
             ############################################
+            # Color Maps
             lat.colorWallMap(window.display) 
             lat.colorHeatMap(window.display)
             lat.colorSmellMap(window.display)
             ############################################
+            # Color cell movement
             cellList.printCells(window.display,lat,printStep,printStep_max)          
             zombieList.printZombies(window.display,lat,printStep,printStep_max)
             motherList.printMothers(window.display,lat,printStep,printStep_max)
