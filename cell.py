@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from utilityFunctions import *
+from utility_functions import *
 from scipy import stats
 
 class cell(object):

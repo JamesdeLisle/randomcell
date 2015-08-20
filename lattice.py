@@ -1,5 +1,5 @@
 import pygame
-from utilityFunctions import *
+from utility_functions import *
 from levelgen import *
 
 

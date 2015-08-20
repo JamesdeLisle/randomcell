@@ -8,7 +8,7 @@ from cell_zombie import *
 from cell_drone import *
 from cell_mother import *
 from grid_window import *
-from utilityFunctions import * 
+from utility_functions import * 
 from cell_hero import *
 
 def initialiseGame(width,height,stepDuration):

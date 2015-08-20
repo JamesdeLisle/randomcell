@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 import pygame
-from utilityFunctions import * 
+from utility_functions import * 
 from runtime_functions import *
 
 pygame.init()

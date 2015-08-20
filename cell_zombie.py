@@ -1,4 +1,4 @@
-from utilityFunctions import *
+from utility_functions import *
 from cell import *
 
 class zombie(cell):
