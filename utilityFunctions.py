@@ -103,7 +103,7 @@ def getAdjacent(wallMap,x,y):
     
     return adjCells
                 
-def detectInput(key,shift):
+def detectInput(key,shift,space):
     
     if key[pygame.K_w]:
         if key[pygame.K_a]:
@@ -133,8 +133,10 @@ def detectInput(key,shift):
             shift = [-1,1]
         else:
             shift = [0,1]
+    elif key[pygame.K_SPACE]:
+        space = True
 
-    return shift
+    return shift,space
 
 
 

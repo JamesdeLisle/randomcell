@@ -66,7 +66,8 @@ class allMothers:
         return len(self.motherList)
 
 def placeFood(lattice,foodList):
-    
+
+    # TODO tidy up this function 
     mouse_position = pygame.mouse.get_pos()
     locx = 0
     locy = 0

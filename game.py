@@ -53,12 +53,13 @@ def main():
     print_flag = 0
     printStep_max = 10
     shift = [0,0]
-    
+    space = False
+
     while running:
         
         event = pygame.event.poll()  
         key = pygame.key.get_pressed()
-        shift = detectInput(key,shift)
+        shift,space = detectInput(key,shift,space)
          
         if event.type == pygame.QUIT:
             running = 0
@@ -71,6 +72,9 @@ def main():
             heroCell.updateCell(lat,shift)
             lat.updateMaps(cellList,zombieList,motherList)
             shift = [0,0]
+            if space:
+                heroCell.dropFood(lat,foodList)
+                space = False
             if cellList.numberOfCells() == 0 and motherList.numberOfCells() == 0 and zombieList.numberOfCells() == 0:
                 running = 0 
             print_flag = 1

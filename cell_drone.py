@@ -44,8 +44,7 @@ class drone(cell):
         green = keepInBoundaries(0,green,255)
         blue = keepInBoundaries(0,blue,255)
         
-        xVec,yVec = self.generateAnimationVectors(lattice,printStep_max)
-        
+        xVec,yVec = self.generateAnimationVectors(lattice,printStep_max) 
         pygame.draw.circle(screen,(0,0,0),(xVec[printStep],yVec[printStep]),10)
         pygame.draw.circle(screen,(0,green,blue),(xVec[printStep],yVec[printStep]),9)
         
