@@ -19,6 +19,34 @@ def wrapBoundaries(min_, val, max_):
 def keepInBoundaries(min_, val, max_):
     return min_ if val < min_ else max_ if val > max_ else val
 
+def createWallMap(width,height):
+
+    wallMap = [ [ False for x in range(width)] for y in range(height)]
+   
+    level = 0
+    
+    if level == 0:
+        wallMap = generate_maze(width,height)
+    elif level == 1:
+        for tik1 in range(height):
+            for tik2 in range(width):
+                if tik1 % 2 == 0 and tik2 % 2 == 0:
+                    wallMap[tik1][tik2] = True
+    elif level == 2:
+        for tik1 in range(height):
+            for tik2 in range(width):
+                if 10 <= tik1 <= 20  and 10 <= tik2 <= 20:
+                    wallMap[tik1][tik2] = True
+    elif level == 3:
+        for tik1 in range(height):
+            for tik2 in range(width):
+                if 0 < tik1 < 15  and tik2 == 10:
+                    wallMap[tik1][tik2] = True
+
+    return wallMap
+
+
+
 def getAdjacent(wallMap,x,y):
 
     adjCells = []
