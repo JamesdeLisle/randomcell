@@ -10,10 +10,15 @@ class hero(cell):
 
     def printCell(self, screen, actorLattices, printStep, printStep_max):
         
-        xVec,yVec = self.generateAnimationVectors(actorLattices,printStep_max)
+        xVec,yVec = self.generateAnimationVectors(actorLattices,printStep_max) 
+        overlay = pygame.Surface((100,100))
+        overlay.set_alpha(100)
+        overlay.fill((255,255,0))
+        
+        screen.blit(overlay,(xVec[printStep]-50,yVec[printStep]-50))
         pygame.draw.polygon(screen,(0,0,0),((xVec[printStep]-10,yVec[printStep]),(xVec[printStep],yVec[printStep]-10),(xVec[printStep]+10,yVec[printStep]),(xVec[printStep],yVec[printStep]+10)))
         pygame.draw.polygon(screen,(0,128,255),((xVec[printStep]-9,yVec[printStep]),(xVec[printStep],yVec[printStep]-9),(xVec[printStep]+9,yVec[printStep]),(xVec[printStep],yVec[printStep]+9)))
-       
+    
     def moveCell(self,fluidLattices,actorLattices,shift):
         
         adjCells = getAdjacent(fluidLattices.wall.Map,self.x,self.y)
@@ -42,8 +47,7 @@ class hero(cell):
 
     def dropFood(self,actorLattices, foodList):
          
-        foodList.addCell(actorLattices,self.x,self.y)
-
+        foodList.addCell(actorLattices,self.x,self.y) 
 
     def updateCell(self, fluidLattices, actorLattices, shift):
 

@@ -34,7 +34,6 @@ class motherPheremoneMap(lattice):
         self.dissipation = 0.95
         self.cutoff = 1e-2
 
-
 class smellMap(lattice):
 
     def __init__(self,width,height):

@@ -18,7 +18,7 @@ class grid_window:
         self.screen_height = self.square_size * self.height + self.margin * 2
 
         self.display = pygame.display.set_mode((self.screen_width, self.screen_height))
-
+        
     def draw_grid(self):
         for tik in range(0, self.width + 1):
             vstart = (self.margin + (tik * self.square_size), self.margin)
@@ -33,3 +33,4 @@ class grid_window:
     def draw_background(self):
         self.display.fill(self.background_colour)
         self.draw_grid()
+
