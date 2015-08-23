@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 from numpy.random import random_sample
+from levelgen import *
 
 def discreteDraw(values,probabilities):
 
@@ -8,9 +9,9 @@ def discreteDraw(values,probabilities):
     out = values[np.digitize(random_sample(1),bins)]
     return round(out[0])
 
-def drawQuantities(screen,cellList,myfont):
+def drawQuantities(screen,droneList,myfont):
  
-    label = myfont.render('Drone Count: %d' % (len(cellList.celist)),4,(0,0,0))
+    label = myfont.render('Drone Count: %d' % (len(droneList.actorList)),4,(0,0,0))
     screen.blit(label,(150,30))
 
 def wrapBoundaries(min_, val, max_):

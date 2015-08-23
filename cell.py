@@ -5,34 +5,34 @@ from scipy import stats
 
 class cell(object):
 
-    def __init__(self,lattice,x,y):
+    def __init__(self,x,y):
         self.x = x
         self.y = y
         self.previous_x = 0
         self.previous_y = 0
         self.hunger = 0.0
     
-    def whereMotives(self,lattice):
+    def whereMotives(self,fluidLattices):
         
         thatDanger = 0.0
         thatDesire = 0.0
         dangerDirection = [0,0]
         desireDirection = [0,0]
-        adjCells = getAdjacent(lattice.wallMap,self.x,self.y)
+        adjCells = getAdjacent(fluidLattices.wall.Map,self.x,self.y)
         
         for tik in range(len(adjCells[:])):
-            xpos = adjCells[tik][0]
-            ypos = adjCells[tik][1]
+            xAdj = adjCells[tik][0]
+            yAdj = adjCells[tik][1]
         
             if self.species == 'drone':
-                thisDanger = lattice.zombiePherMap[xpos][ypos]
-                thisDesire = lattice.smellMap[xpos][ypos]
+                thisDanger = fluidLattices.zombiePheremone.Map[xAdj][yAdj]
+                thisDesire = fluidLattices.smell.Map[xAdj][yAdj]
             elif self.species == 'zombie':
-                thisDanger = lattice.motherPherMap[xpos][ypos]
-                thisDesire = lattice.heatMap[xpos][ypos]
+                thisDanger = fluidLattices.motherPheremone.Map[xAdj][yAdj]
+                thisDesire = fluidLattices.heat.Map[xAdj][yAdj]
             elif self.species == 'mother':
-                thisDanger = lattice.emptyMap[xpos][ypos]
-                thisDesire = lattice.heatMap[xpos][ypos] 
+                thisDanger = fluidLattices.empty.Map[xAdj][yAdj]
+                thisDesire = fluidLattices.heat.Map[xAdj][yAdj] 
 
             if thisDanger > thatDanger:
                 thatDanger = thisDanger
@@ -46,11 +46,11 @@ class cell(object):
 
         return (dangerDirection,desireDirection)
  
-    def weightWalk(self,lattice,motiveDirection):
+    def weightWalk(self,fluidLattices,motiveDirection):
 
         weightsDesire = []
         weightsDanger = []
-        adjCells = getAdjacent(lattice.wallMap,self.x,self.y)
+        adjCells = getAdjacent(fluidLattices.wall.Map,self.x,self.y)
         nCells = len(adjCells[:])
         
         for tik in range(nCells):
@@ -78,11 +78,11 @@ class cell(object):
         
         return weights  
     
-    def generateNextPosition(self,lattice,weights):
+    def generateNextPosition(self,fluidLattices,weights):
 
         draw = [np.random.uniform(), np.random.uniform()]
         shift = [0,0]
-        adjCells = getAdjacent(lattice.wallMap,self.x,self.y)
+        adjCells = getAdjacent(fluidLattices.wall.Map,self.x,self.y)
         cellNum = np.array([ x for x in range(len(adjCells[:])+1)])
         probs = np.array(weights)
         choice = discreteDraw(cellNum,probs)
@@ -94,43 +94,44 @@ class cell(object):
 
         return shift
    
-    def updateCellMap(self,lattice,flag):
-        if self.species == 'drone':
-            lattice.cellMap[self.x][self.y] = flag
-        elif self.species == 'zombie':
-            lattice.zombieCellMap[self.x][self.y] = flag
-        elif self.species == 'mother':
-            lattice.motherMap[self.x][self.y] = flag
-        elif self.species == 'hero':
-            lattice.heroMap[self.x][self.y] = flag
-
-    def moveCell(self,lattice):
+    def updateCellMap(self,actorLattices,flag):
         
-        motiveDirection = self.whereMotives(lattice)
-        weights = self.weightWalk(lattice,motiveDirection) 
-        shift = self.generateNextPosition(lattice,weights)
+        if self.species == 'drone':
+            actorLattices.drone.Map[self.x][self.y] = flag
+        elif self.species == 'zombie':
+            actorLattices.zombie.Map[self.x][self.y] = flag
+        elif self.species == 'mother':
+            actorLattices.mother.Map[self.x][self.y] = flag
+        elif self.species == 'hero':
+            actorLattices.hero.Map[self.x][self.y] = flag
+
+    def moveCell(self,fluidLattices,actorLattices):
+        
+        motiveDirection = self.whereMotives(fluidLattices)
+        weights = self.weightWalk(fluidLattices,motiveDirection) 
+        shift = self.generateNextPosition(fluidLattices,weights)
  
-        self.updateCellMap(lattice,False)
+        self.updateCellMap(actorLattices,False)
         self.previous_x = self.x
         self.previous_y = self.y
         self.x = self.x + shift[0]
         self.y = self.y + shift[1]
-        self.updateCellMap(lattice,True)
+        self.updateCellMap(actorLattices,True)
         minLx = 0
         minLy = 0
-        maxLy = lattice.width
-        maxLx = lattice.height
+        maxLy = actorLattices.drone.width
+        maxLx = actorLattices.drone.height
         self.x = wrapBoundaries(minLx,self.x,maxLx)
         self.y = wrapBoundaries(minLy,self.y,maxLy)
 
-    def generateAnimationVectors(self,lattice,printStep_max):
+    def generateAnimationVectors(self,actorLattices,printStep_max):
         
-        xpos = lattice.points[self.x][self.y].location[0]
-        ypos = lattice.points[self.x][self.y].location[1]
-        xmin = lattice.points[self.previous_x][self.previous_y].location[0]
-        xmax = lattice.points[self.x][self.y].location[0]
-        ymin = lattice.points[self.previous_x][self.previous_y].location[1]
-        ymax = lattice.points[self.x][self.y].location[1]
+        xpos = actorLattices.drone.points[self.x][self.y].location[0]
+        ypos = actorLattices.drone.points[self.x][self.y].location[1]
+        xmin = actorLattices.drone.points[self.previous_x][self.previous_y].location[0]
+        xmax = actorLattices.drone.points[self.x][self.y].location[0]
+        ymin = actorLattices.drone.points[self.previous_x][self.previous_y].location[1]
+        ymax = actorLattices.drone.points[self.x][self.y].location[1]
         xVec = np.linspace(xmin,xmax,printStep_max).tolist()
         yVec = np.linspace(ymin,ymax,printStep_max).tolist()
         xVec = [ int(round(x)) for x in xVec ]

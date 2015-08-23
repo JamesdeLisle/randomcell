@@ -10,13 +10,17 @@ def main():
     
     width = 70
     height = 30
-    stepDuration = 300
+    stepDuration = 400
     printStep_max = 10
 
-    window, lat, MOVEEVENT, myfont = initialiseGame(width, height, stepDuration)
-    zombieList, motherList, cellList, foodList = initialisePlayerLists()
-    heroCell = placeStartingCells(lat, zombieList, motherList, cellList, foodList) 
-    running_flag, printStep, print_flag, shift, space = initialUpdate(window, lat, cellList, zombieList, motherList, foodList)
+    window, actorLattices, fluidLattices, MOVEEVENT, myfont = initialiseGame(width, height, stepDuration)
+    
+    zombieList, motherList, droneList, foodList = initialisePlayerLists()
+    
+    heroCell = placeStartingCells(actorLattices,zombieList, motherList, droneList, foodList) 
+    
+    running_flag, printStep, print_flag, shift, space = initialUpdate(window,\
+            fluidLattices,actorLattices,droneList,zombieList,motherList,foodList)
 
     while running_flag:
         
@@ -25,11 +29,14 @@ def main():
 
         shift,space = detectInput(key,shift,space)
          
-        running_flag, shift, space, print_flag = eventHandler(running_flag, lat, \
-                window, cellList, zombieList, motherList, heroCell, foodList, \
-                space, event, shift, MOVEEVENT, print_flag)
+        running_flag, shift, space, print_flag = eventHandler(running_flag,\
+                fluidLattices, actorLattices, window, droneList, zombieList,\
+                motherList, heroCell, foodList, space, event, shift, MOVEEVENT,\
+                print_flag)
 
-        printStep, print_flag = printHandler(window, lat, cellList, zombieList, motherList, heroCell, foodList, printStep, print_flag, myfont, printStep_max)
+        printStep, print_flag = printHandler(window, fluidLattices, actorLattices,\
+                droneList, zombieList, motherList, heroCell, foodList, printStep,\
+                print_flag, myfont, printStep_max)
 
         pygame.display.update() 
     

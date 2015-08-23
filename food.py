@@ -2,11 +2,12 @@ import pygame
 
 class food:
     
-    def __init__(self,lattice,x,y):
+    def __init__(self,actorLattices,x,y):
         self.x = x
         self.y = y
-        lattice.foodMap[x][y] = True
+        actorLattices.food.Map[x][y] = True
+        self.output = 10.0
 
-    def printFood(self,screen,lattice):
-        pygame.draw.circle(screen,(0,0,255),(lattice.points[self.x][self.y].location[0],lattice.points[self.x][self.y].location[1]),6)
+    def printCell(self,screen,actorLattices):
+        pygame.draw.circle(screen,(0,0,255),(actorLattices.drone.points[self.x][self.y].location[0],actorLattices.drone.points[self.x][self.y].location[1]),6)
 

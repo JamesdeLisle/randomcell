@@ -5,67 +5,69 @@ from cell_zombie import *
 from cell import *
 from cell_mother import *
 
-class allCells:
+class activeActors(object):
 
     def __init__(self):
-        self.celist = []
-
-    def addCell(self,lattice,x,y):
-        self.celist.append(drone(lattice,x,y))
-
-    def updateCells(self,screen,lattice,foodList,cellList):
-        map(lambda cell: cell.updateCell(lattice,foodList,cellList), self.celist)
-
-    def printCells(self,screen,lattice,printStep,printStep_max):
-        map(lambda cell: cell.printCell(screen,lattice,printStep,printStep_max), self.celist)
+        self.actorList = []
 
     def numberOfCells(self):
-        return len(self.celist)
+        return len(self.actorList)
 
-class allFood:
+class allDrones(activeActors):
 
     def __init__(self):
-        self.foodList = []
+        activeActors.__init__(self)
 
-    def addFood(self,lattice,x,y):
-        self.foodList.append(food(lattice,x,y))
+    def addCell(self,actorLattices,x,y):
+        self.actorList.append(drone(actorLattices,x,y))
 
-    def updateFoods(self,screen,lattice):
-        map(lambda food: food.printFood(screen,lattice), self.foodList)
+    def updateCells(self,fluidLattices,actorLattices,foodList):
+        map(lambda drone: drone.updateCell(fluidLattices,actorLattices,foodList), self.actorList)
 
-class allZombies:
+    def printCells(self,screen, actorLattices, printStep, printStep_max):
+        map(lambda drone: drone.printCell(screen,actorLattices,printStep,printStep_max), self.actorList)
+
+
+class allFood(activeActors):
+
     def __init__(self):
-        self.zombieList = []
+        activeActors.__init__(self)
 
-    def addZombie(self,lattice,x,y):
-        self.zombieList.append(zombie(lattice,x,y))
+    def addCell(self,actorLattices,x,y):
+        self.actorList.append(food(actorLattices,x,y))
 
-    def updateZombies(self,screen,lattice,cellList):
-        map(lambda zombie: zombie.updateCell(lattice,cellList), self.zombieList)
+    def printCells(self,screen,actorLattices):
+        map(lambda food: food.printCell(screen,actorLattices), self.actorList)
 
-    def printZombies(self,screen,lattice,printStep,printStep_max):
-        map(lambda zombie: zombie.printCell(screen,lattice,printStep,printStep_max), self.zombieList)
+class allZombies(activeActors):
 
-    def numberOfCells(self):
-        return len(self.zombieList)
-
-class allMothers:
     def __init__(self):
-        self.motherList = []
+        activeActors.__init__(self)
 
-    def addMother(self,lattice,x,y):
-        self.motherList.append(mother(lattice,x,y))
+    def addCell(self,actorLattices,x,y):
+        self.actorList.append(zombie(actorLattices,x,y))
 
-    def updateMothers(self,screen,lattice,foodList):
-        map(lambda mother: mother.updateCell(lattice,foodList), self.motherList)
+    def updateCells(self,fluidLattices, actorLattices, droneList):
+        map(lambda zombie: zombie.updateCell(fluidLattices, actorLattices, droneList), self.actorList)
 
-    def printMothers(self,screen,lattice,printStep,printStep_max):
-        map(lambda mother: mother.printCell(screen,lattice,printStep,printStep_max), self.motherList)
+    def printCells(self,screen,actorLattices,printStep,printStep_max):
+        map(lambda zombie: zombie.printCell(screen,actorLattices,printStep,printStep_max), self.actorList)
 
-    def numberOfCells(self):
-        return len(self.motherList)
+class allMothers(activeActors):
 
-def placeFood(lattice,foodList):
+    def __init__(self):
+        activeActors.__init__(self)
+
+    def addCell(self,actorLattices,x,y):
+        self.actorList.append(mother(actorLattices,x,y))
+
+    def updateCells(self,fluidLattices,actorLattices,foodList):
+        map(lambda mother: mother.updateCell(fluidLattices,actorLattices,foodList), self.actorList)
+
+    def printCells(self,screen,actorLattices,printStep,printStep_max):
+        map(lambda mother: mother.printCell(screen,actorLattices,printStep,printStep_max), self.actorList)
+
+def placeFood(fluidLattices,actorLattices,foodList):
 
     # TODO tidy up this function 
     mouse_position = pygame.mouse.get_pos()
@@ -74,49 +76,49 @@ def placeFood(lattice,foodList):
     diffprev = 1000.0
     diffcurr = 1000.0
     
-    for tik1 in range(lattice.height):
-        diffcurr = lattice.points[tik1][0].location[1] - mouse_position[1]
+    for tik1 in range(actorLattices.drone.height):
+        diffcurr = actorLattices.drone.points[tik1][0].location[1] - mouse_position[1]
         if abs(diffcurr) < abs(diffprev):
             locx = tik1
             diffprev = diffcurr 
     diffprev = 1000.0
     diffcurr = 1000.0
 
-    for tik1 in range(lattice.width):
-        diffcurr = lattice.points[5][tik1].location[0] - mouse_position[0]
+    for tik1 in range(actorLattices.drone.width):
+        diffcurr = actorLattices.drone.points[5][tik1].location[0] - mouse_position[0]
         
         if abs(diffcurr) < abs(diffprev):
             locy = tik1
             diffprev = diffcurr
     
-    if lattice.foodMap[locx][locy]:
+    if actorLattices.food.Map[locx][locy]:
         pass
-    elif lattice.wallMap[locx][locy]:
+    elif fluidLattices.wall.Map[locx][locy]:
         pass
     else:
-        foodList.addFood(lattice,locx,locy)
+        foodList.addCell(actorLattices,locx,locy)
 
-def createChildren(lattice,cellList):
+def createChildren(actorLattices,droneList):
 
-    for tik1 in range(len(cellList.celist)):
-        for tik2 in range(len(cellList.celist)):
-            if cellList.celist[tik1].x == cellList.celist[tik2].x and \
-                    cellList.celist[tik1].x == cellList.celist[tik2].x and \
-                    cellList.celist[tik1].birthometer == 0 and \
-                    cellList.celist[tik2].birthometer == 0 and \
-                    cellList.celist[tik1].hunger < 0.25 and \
-                    cellList.celist[tik2].hunger < 0.25 and \
+    for tik1 in range(len(droneList.actorList)):
+        for tik2 in range(len(droneList.actorList)):
+            if droneList.actorList[tik1].x == droneList.actorList[tik2].x and \
+                    droneList.actorList[tik1].x == droneList.actorList[tik2].x and \
+                    droneList.actorList[tik1].birthometer == 0 and \
+                    droneList.actorList[tik2].birthometer == 0 and \
+                    droneList.actorList[tik1].hunger < 0.25 and \
+                    droneList.actorList[tik2].hunger < 0.25 and \
                     tik1 != tik2:
-                cellList.addCell(lattice,cellList.celist[tik1].x,cellList.celist[tik1].y)
-                cellList.celist[tik1].birthometer = 20
-                cellList.celist[tik2].birthometer = 20
+                droneList.addCell(actorLattices,droneList.actorList[tik1].x,droneList.actorList[tik1].y)
+                droneList.actorList[tik1].birthometer = 20
+                droneList.actorList[tik2].birthometer = 20
 
-def killDying(lattice,cellList):
+def killDying(actorLattices,droneList):
 
-    for tik1 in range(len(cellList.celist)):
-        if cellList.celist[tik1].deathsdoor > 1.0:
-            lattice.cellMap[cellList.celist[tik1].x][cellList.celist[tik1].y] = False
-            cellList.celist.pop(tik1)
+    for tik1 in range(len(droneList.actorList)):
+        if droneList.actorList[tik1].deathsdoor > 1.0:
+            actorLattices.drone.Map[droneList.actorList[tik1].x][droneList.actorList[tik1].y] = False
+            droneList.actorList.pop(tik1)
             break
   
    
