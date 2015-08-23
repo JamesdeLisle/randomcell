@@ -10,8 +10,8 @@ def main():
     
     width = 70
     height = 30
-    stepDuration = 400
-    printStep_max = 10
+    stepDuration = 300
+    printStep_max = 7
 
     window, actorLattices, fluidLattices, MOVEEVENT, myfont = initialiseGame(width, height, stepDuration)
     

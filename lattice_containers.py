@@ -1,15 +1,5 @@
-from lattice_droneMap import *
-from lattice_emptyMap import *
-from lattice_foodMap import *
-from lattice_heatMap import *
-from lattice_heroMap import *
-from lattice_motherMap import *
-from lattice_motherPheremoneMap import *
-from lattice_smellMap import *
-from lattice_wallMap import *
-from lattice_zombieMap import *
-from lattice_zombiePheremoneMap import *
-
+from lattice_actors import *
+from lattice_fluids import *
 
 class actorLattice:
 
