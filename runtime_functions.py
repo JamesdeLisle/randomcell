@@ -7,7 +7,7 @@ from players import *
 from cell_zombie import *
 from cell_drone import *
 from cell_mother import *
-from grid_window import *
+from window import *
 from utility_functions import * 
 from cell_hero import *
 from lattice_containers import *

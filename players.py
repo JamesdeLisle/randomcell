@@ -68,8 +68,7 @@ class allMothers(activeActors):
         map(lambda mother: mother.printCell(screen,actorLattices,printStep,printStep_max), self.actorList)
 
 def placeFood(fluidLattices,actorLattices,foodList):
-
-    # TODO tidy up this function 
+ 
     mouse_position = pygame.mouse.get_pos()
     locx = 0
     locy = 0

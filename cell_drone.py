@@ -14,7 +14,7 @@ class drone(cell):
         self.moveAwayDanger = 1000.0
         self.moveToOther = 1.0
         self.moveNowhere = 5.0
-        self.output = 0.0 #(1 - self.hunger) * 2.0
+        self.output = (1 - self.hunger) * 2.0
 
         
     def eatFood(self,actorLattices,foodList):
