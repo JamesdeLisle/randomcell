@@ -46,8 +46,6 @@ def createWallMap(width,height):
 
     return wallMap
 
-
-
 def getAdjacent(wallMap,x,y):
 
     adjCells = []
