@@ -54,6 +54,8 @@ def initialUpdate(window,fluidLattices,actorLattices,droneList,zombieList,mother
     print_flag = 0
     shift = [0,0]
     space = False
+    wall = False
+    wallOrientation = 'null'
     
     window.draw_background()
 
@@ -66,9 +68,9 @@ def initialUpdate(window,fluidLattices,actorLattices,droneList,zombieList,mother
     zombieList.updateCells(fluidLattices, actorLattices, droneList) 
     motherList.updateCells(fluidLattices,actorLattices,foodList)
     
-    return running_flag, printStep, print_flag, shift, space
+    return running_flag, printStep, print_flag, shift, space, wall, wallOrientation
 
-def eventHandler(running_flag, fluidLattices, actorLattices, window, droneList, zombieList, motherList, heroCell, foodList, space, event, shift, MOVEEVENT, print_flag):
+def eventHandler(running_flag, fluidLattices, actorLattices, window, droneList, zombieList, motherList, heroCell, foodList, space, event, shift, MOVEEVENT, print_flag,wall,wallOrientation):
 
     if event.type == pygame.QUIT:
         running_flag = 0
@@ -89,18 +91,21 @@ def eventHandler(running_flag, fluidLattices, actorLattices, window, droneList, 
             space = False
         if droneList.numberOfCells() == 0:
             running_flag = 0 
+        if wall:
+            heroCell.createWall(fluidLattices,wallOrientation)
+            wall = False
         print_flag = 1
     elif event.type == pygame.MOUSEBUTTONUP:
         placeFood(fluidLattices,actorLattices,foodList)
 
-    return running_flag, shift, space, print_flag
+    return running_flag, shift, space, print_flag,wall
 
 def printHandler(window, fluidLattices, actorLattices, droneList, zombieList, motherList, heroCell, foodList, printStep, print_flag, myfont, printStep_max):
     
     if print_flag:
         window.draw_background()
         drawQuantities(window.display,droneList,myfont)
-        fluidLattices.wall.colorMap(window.display) 
+        fluidLattices.wall.colorMap(window.display,printStep,printStep_max) 
         fluidLattices.heat.colorMap(window.display,printStep,printStep_max)
         fluidLattices.smell.colorMap(window.display)
         droneList.printCells(window.display,actorLattices,printStep,printStep_max)          

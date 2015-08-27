@@ -10,8 +10,8 @@ def main():
     
     width = 70
     height = 30
-    stepDuration = 300
-    printStep_max = 7
+    stepDuration = 1000
+    printStep_max = 30
 
     window, actorLattices, fluidLattices, MOVEEVENT, myfont = initialiseGame(width, height, stepDuration)
     
@@ -19,7 +19,7 @@ def main():
     
     heroCell = placeStartingCells(actorLattices,zombieList, motherList, droneList, foodList) 
     
-    running_flag, printStep, print_flag, shift, space = initialUpdate(window,\
+    running_flag, printStep, print_flag, shift, space, wall, wallOrientation = initialUpdate(window,\
             fluidLattices,actorLattices,droneList,zombieList,motherList,foodList)
 
     while running_flag:
@@ -27,12 +27,12 @@ def main():
         event = pygame.event.poll()  
         key = pygame.key.get_pressed()
 
-        shift,space = detectInput(key,shift,space)
+        shift,space,wall,wallOrientation = detectInput(key,shift,space,wall,wallOrientation)
          
-        running_flag, shift, space, print_flag = eventHandler(running_flag,\
+        running_flag, shift, space, print_flag,wall = eventHandler(running_flag,\
                 fluidLattices, actorLattices, window, droneList, zombieList,\
                 motherList, heroCell, foodList, space, event, shift, MOVEEVENT,\
-                print_flag)
+                print_flag,wall, wallOrientation)
 
         printStep, print_flag = printHandler(window, fluidLattices, actorLattices,\
                 droneList, zombieList, motherList, heroCell, foodList, printStep,\

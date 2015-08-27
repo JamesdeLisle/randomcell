@@ -25,7 +25,7 @@ class mother(cell):
        
         self.moveCell(fluidLattices,actorLattices)
         self.dropFood(actorLattices,foodList)
-        self.foodDropTimer = self.foodDropTimer - 0.1
+        self.foodDropTimer = self.foodDropTimer - 0.01
 
     def printCell(self,screen,actorLattices,printStep,printStep_max): 
         

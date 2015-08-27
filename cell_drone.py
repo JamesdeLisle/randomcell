@@ -31,7 +31,7 @@ class drone(cell):
        
         self.eatFood(actorLattices,foodList)
         self.moveCell(fluidLattices,actorLattices)
-        self.hunger = self.hunger + 0.01
+        self.hunger = self.hunger + 0.003
         self.birthometer = self.birthometer - 1
         self.output = (1 - self.hunger) * 2.0
 

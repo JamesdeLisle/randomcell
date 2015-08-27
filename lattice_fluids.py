@@ -68,8 +68,9 @@ class wallMap(lattice):
     def __init__(self,width,height):
         lattice.__init__(self,width,height)
         self.Map = createWallMap(width,height)
+        self.Map_temp = [[ [False,0] for x in range(self.width)] for y in range(self.height)]
 
-    def colorMap(self,screen):
+    def colorMap(self,screen,printStep,printStep_max):
 
         for tik1 in range(self.height):
             for tik2 in range(self.width):

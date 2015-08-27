@@ -109,8 +109,8 @@ def createChildren(actorLattices,droneList):
                     droneList.actorList[tik2].hunger < 0.25 and \
                     tik1 != tik2:
                 droneList.addCell(actorLattices,droneList.actorList[tik1].x,droneList.actorList[tik1].y)
-                droneList.actorList[tik1].birthometer = 20
-                droneList.actorList[tik2].birthometer = 20
+                droneList.actorList[tik1].birthometer = 100
+                droneList.actorList[tik2].birthometer = 100
 
 def killDying(actorLattices,droneList):
 
